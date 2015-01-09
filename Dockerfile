@@ -6,6 +6,7 @@ FROM phusion/baseimage:latest
 
 # Set correct environment variables.
 ENV HOME /root
+ENV NODEJS_VERSION 0.10.35
 
 # Regenerate SSH host keys. baseimage-docker does not contain any, so you
 # have to do that yourself. You may also comment out this instruction; the
@@ -16,9 +17,9 @@ RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 CMD ["/sbin/my_init"]
 
 # ...put your own build instructions here...
-# Prepare install environment of nodejs 0.10.26
+# Prepare install environment of nodejs 0.10.35 or variable paramter(TODO)
 RUN apt-get update -y && apt-get install --no-install-recommends -y -q curl python build-essential git ca-certificates wget unzip
-RUN mkdir /nodejs && curl http://nodejs.org/dist/v0.10.26/node-v0.10.26-linux-x64.tar.gz | tar xvzf - -C /nodejs --strip-components=1
+RUN mkdir /nodejs && curl http://nodejs.org/dist/v$NODEJS_VERSION/node-v$NODEJS_VERSION-linux-x64.tar.gz | tar xvzf - -C /nodejs --strip-components=1
 
 ENV PATH $PATH:/nodejs/bin
 
